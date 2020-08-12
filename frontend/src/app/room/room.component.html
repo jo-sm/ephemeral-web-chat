@@ -1,0 +1,23 @@
+<div class="chat">
+  <ul #scrollToBottom class="events">
+    <li *ngFor="let event of this.roomService.events" class="event"
+      [ngStyle]="{ 'background-color': event.type === 'message' ? event.createdBy.color : initial }"
+      [class.status]="event.type !== 'message'" [class.message]="event.type === 'message'" [class.self]="event.self">
+      <span *ngIf="event.type === 'message'">{{event.message}}</span>
+      <span *ngIf="event.type === 'changeIdentity'">{{event.createdBy.name}} changed their name</span>
+    </li>
+  </ul>
+
+  <form class="message-input-form" [formGroup]="form" (submit)="sendMessage($event)">
+    <input type="text" formControlName="message" />
+  </form>
+</div>
+<div class="info">
+  <h2 class="title">Chat peers</h2>
+  <ul class="peers">
+    <li *ngFor="let peer of this.roomService.peers | keyvalue" class="peer" [ngClass]="[peer.value.status]">
+      <div class="peer--color-indicator" [ngStyle]="{ 'background-color': peer.value.color }"></div>
+      {{peer.value.name || "Someone"}}
+    </li>
+  </ul>
+</div>

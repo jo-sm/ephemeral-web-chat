@@ -1,0 +1,10 @@
+<div class="center">
+  <h1>Welcome! Enter your name below and get started chatting!</h1>
+  <h3>Looking to join an existing room? Ask for the link and enter it into the URL bar above.</h3>
+  <form [formGroup]="form" (submit)="submit($event)">
+    <div class="form-group">
+      <input tabindex="0" type="text" formControlName="name" placeholder="Lorenzo" />
+      <button tabindex="0" type="submit">Let's go!</button>
+    </div>
+  </form>
+</div>
