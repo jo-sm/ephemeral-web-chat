@@ -3,6 +3,7 @@ import { KeypairService } from './keypair.service';
 import { IdentityService } from './identity.service';
 import { RTCPeer, ConnectionState, MessageType } from './rtcpeer';
 import randomcolor from 'randomcolor';
+import { environment } from '../environments/environment';
 
 enum RelayMessageType {
   PEERS_REQUEST = 'peersRequest',
@@ -65,11 +66,11 @@ export class RoomService {
     private identityService: IdentityService
   ) {}
 
-  setup(roomId: string) {
+  setup(roomId: string): void {
     this.roomId = roomId;
 
     this.relayConnection = new WebSocket(
-      `ws://localhost:9000/ws/room/${this.roomId}`
+      `${environment.wsServer}/ws/room/${this.roomId}`
     );
     this.relayConnection.addEventListener('open', this.handleOpen.bind(this));
     this.relayConnection.addEventListener(
@@ -78,7 +79,7 @@ export class RoomService {
     );
   }
 
-  broadcast(message: string) {
+  broadcast(message: string): void {
     this.events.push({
       type: 'message',
       message,
@@ -204,7 +205,7 @@ export class RoomService {
     this.rtcConnections.get(peer).addRemoteIceCandidate(payload);
   }
 
-  private createPeer(from: string, initiator: boolean = false): PeerDetails {
+  private createPeer(from: string, initiator = false): PeerDetails {
     const rtcConn = new RTCPeer(this.identityService, initiator);
 
     // Peers don't identify until later, so we just set their name to generic "someone"

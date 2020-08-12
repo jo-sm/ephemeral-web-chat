@@ -76,7 +76,7 @@ export class RTCPeer {
     );
   }
 
-  async generateOffer() {
+  async generateOffer(): Promise<RTCSessionDescription> {
     this.channel = this.rtcConnection.createDataChannel('message');
     this.channel.binaryType = 'arraybuffer';
 
@@ -90,7 +90,9 @@ export class RTCPeer {
     return this.rtcConnection.localDescription;
   }
 
-  async generateAnswer(offer: RTCSessionDescription) {
+  async generateAnswer(
+    offer: RTCSessionDescription
+  ): Promise<RTCSessionDescription> {
     const remoteDesc = new RTCSessionDescription(offer);
 
     await this.rtcConnection.setRemoteDescription(remoteDesc);
@@ -101,7 +103,7 @@ export class RTCPeer {
     return this.rtcConnection.localDescription;
   }
 
-  async send(message: Message) {
+  async send(message: Message): void {
     // TODO: queueing
     if (this.connectionState.getValue() !== ConnectionState.Established) {
       return;
@@ -117,11 +119,11 @@ export class RTCPeer {
     this.channel.send(encrypted);
   }
 
-  addRemoteSessionDescription(remoteDesc: RTCSessionDescription) {
+  addRemoteSessionDescription(remoteDesc: RTCSessionDescription): void {
     this.rtcConnection.setRemoteDescription(remoteDesc);
   }
 
-  addRemoteIceCandidate(init: RTCIceCandidateInit) {
+  addRemoteIceCandidate(init: RTCIceCandidateInit): void {
     this.rtcConnection.addIceCandidate(new RTCIceCandidate(init));
   }
 
@@ -162,12 +164,13 @@ export class RTCPeer {
       case ConnectionState.VerificationHashSent:
         this.handleVerificationMessage(data);
         break;
-      case ConnectionState.Established:
+      case ConnectionState.Established: {
         const decrypted = await this.identity.decrypt(data);
         const parsed = JSON.parse(decrypted) as Message;
 
         this.messages.next(parsed);
         break;
+      }
     }
   }
 
@@ -201,7 +204,7 @@ export class RTCPeer {
     this.sendPublicKey();
   }
 
-  private async handleSendVerificationMessage(data) {
+  private async handleSendVerificationMessage(data: ArrayBuffer) {
     const message = JSON.parse(new TextDecoder().decode(data));
 
     await this.setPeerPublicKey(message.payload);
@@ -240,7 +243,7 @@ export class RTCPeer {
     this.connectionState.next(ConnectionState.Established);
   }
 
-  private async handleConnectionStateChange(event: Event) {
+  private async handleConnectionStateChange() {
     const closedEvents = ['closed', 'disconnected', 'failed'];
 
     if (closedEvents.includes(this.rtcConnection.connectionState)) {

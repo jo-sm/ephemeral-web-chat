@@ -1,4 +1,4 @@
-export function generateRandomHex(len = 16) {
+export function generateRandomHex(len = 16): string {
   const randomBytes = window.crypto.getRandomValues(new Uint8Array(len));
 
   return Array.from(randomBytes)

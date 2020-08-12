@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  wsServer: 'wss://example.com', // TODO
 };

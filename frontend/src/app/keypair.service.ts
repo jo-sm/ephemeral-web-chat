@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class KeypairService {
-  generate() {
+  generate(): PromiseLike<CryptoKeyPair> {
     return window.crypto.subtle.generateKey(
       {
         name: 'RSA-OAEP',
@@ -17,7 +17,7 @@ export class KeypairService {
     );
   }
 
-  decrypt(privateKey: CryptoKey, data: ArrayBuffer) {
+  decrypt(privateKey: CryptoKey, data: ArrayBuffer): PromiseLike<ArrayBuffer> {
     return window.crypto.subtle.decrypt(
       {
         name: 'RSA-OAEP',

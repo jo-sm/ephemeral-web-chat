@@ -22,9 +22,11 @@ export class RoomsComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //
+  }
 
-  submit(e) {
+  submit(e: Event): void {
     e.preventDefault();
     e.stopPropagation();
 

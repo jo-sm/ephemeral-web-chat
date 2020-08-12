@@ -37,7 +37,7 @@ export class RoomComponent implements OnInit, AfterViewChecked {
     this.roomService.setup(this.roomId);
   }
 
-  ngAfterViewChecked() {
+  ngAfterViewChecked(): void {
     const liEle = this.eventsContainer.nativeElement.querySelector(
       'li:last-child'
     );
@@ -49,7 +49,7 @@ export class RoomComponent implements OnInit, AfterViewChecked {
     liEle.scrollIntoView();
   }
 
-  sendMessage(e) {
+  sendMessage(e: Event): void {
     e.preventDefault();
     e.stopPropagation();
 

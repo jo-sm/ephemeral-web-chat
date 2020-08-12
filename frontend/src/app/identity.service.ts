@@ -23,11 +23,11 @@ export class IdentityService {
     this.generateId();
   }
 
-  setName(name: string) {
+  setName(name: string): void {
     this.name = name;
   }
 
-  async decrypt(encryptedData: ArrayBuffer) {
+  async decrypt(encryptedData: ArrayBuffer): Promise<string> {
     // TODO: Move this into the keypairService
     await this.keypairPromise;
 
@@ -39,7 +39,7 @@ export class IdentityService {
     return new TextDecoder().decode(decrypted);
   }
 
-  async getPublicKey() {
+  async getPublicKey(): Promise<JsonWebKey> {
     await this.keypairPromise;
 
     return window.crypto.subtle.exportKey('jwk', this.publicKey);
