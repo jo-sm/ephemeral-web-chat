@@ -103,7 +103,7 @@ export class RTCPeer {
     return this.rtcConnection.localDescription;
   }
 
-  async send(message: Message): void {
+  async send(message: Message): Promise<void> {
     // TODO: queueing
     if (this.connectionState.getValue() !== ConnectionState.Established) {
       return;
