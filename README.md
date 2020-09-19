@@ -1,6 +1,6 @@
-# Emphemral chat app
+# Ephemeral, secure web chat application
 
-An Angular application for secure, ephemeral chats using WebRTC and WebSockets.
+An Angular application for ephemeral and secure chats using WebRTC and WebSockets.
 
 ## Trying it out
 
@@ -10,7 +10,7 @@ There's a few more changes I'd like to add in before getting this on my website,
 
 ### RTC configuration
 
-You will need to supply your own [https://developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration](`RTCConfiguration`), in particular the STUN (and TURN) servers, to be able to run this outside of your local network. [There are some public ones](https://gist.github.com/zziuni/3741933) but they may not be reliable and I recommend setting one up yourself. I use `coturn` and I roughly describe the setup in [my blog post on this topic](https://joshuasmock.com/posts/project-creating-a-secure-peer-to-peer-web-chat-application.html#private-networks).
+You will need to supply your own [`RTCConfiguration`](https://developer.mozilla.org/en-US/docs/Web/API/RTCConfiguration), in particular the STUN (and TURN) servers, to be able to run this outside of your local network. [There are some public ones](https://gist.github.com/zziuni/3741933) but they may not be reliable and I recommend setting one up yourself. I use `coturn` and I roughly describe the setup in [my blog post on this topic](https://joshuasmock.com/posts/project-creating-a-secure-peer-to-peer-web-chat-application.html#private-networks).
 
 ### Running (and developing) locally
 
